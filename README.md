@@ -1,63 +1,147 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19676367&assignment_repo_type=AssignmentRepo)
-# Express.js RESTful API Assignment
 
-This assignment focuses on building a RESTful API using Express.js, implementing proper routing, middleware, and error handling.
 
-## Assignment Overview
+# **Express.js Product API**  
 
-You will:
-1. Set up an Express.js server
-2. Create RESTful API routes for a product resource
-3. Implement custom middleware for logging, authentication, and validation
-4. Add comprehensive error handling
-5. Develop advanced features like filtering, pagination, and search
+## **📌 Overview**  
+This is a **RESTful API** built with **Express.js and MongoDB (Mongoose)** for managing product data. It supports **CRUD operations** (Create, Read, Update, Delete) and includes **authentication via an API key**, **UUID-based unique IDs**, and advanced features like **search, pagination, and filtering**.  
 
-## Getting Started
+## **⚙️ Features**  
+✅ **Full CRUD Operations** (GET, POST, PUT, DELETE)  
+✅ **MongoDB Integration (via Mongoose)**  
+✅ **Authentication via API Key**  
+✅ **Filtering, Pagination, Search, and Statistics**  
+✅ **Seeding database with initial products**  
+✅ **Error handling for missing environment variables**  
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Install dependencies:
-   ```
-   npm install
-   ```
-4. Run the server:
-   ```
-   npm start
-   ```
+---
 
-## Files Included
+## **🚀 Setup Instructions**  
 
-- `Week2-Assignment.md`: Detailed assignment instructions
-- `server.js`: Starter Express.js server file
-- `.env.example`: Example environment variables file
+### **1️⃣ Install Dependencies using `pnpm`**  
+Run the following command to install required packages:  
+```sh
+pnpm install
+```
 
-## Requirements
+### **2️⃣ Configure Environment Variables**  
+- Rename `.env.example` to `.env`.  
+- Update `.env` file with your MongoDB URI and API key:  
+```plaintext
+MONGODB_URI=mongodb://localhost:27017/productsdb
+PORT=3000
+API_KEY=your-secret-api-key
+NODE_ENV=development
+```
 
-- Node.js (v18 or higher)
-- npm or yarn
-- Postman, Insomnia, or curl for API testing
+### **3️⃣ Start MongoDB**  
+Ensure MongoDB is running locally:  
+```sh
+mongod --dbpath /path/to/your/data
+```
 
-## API Endpoints
+### **4️⃣ Run the API Server**  
+Start the Express.js application:  
+```sh
+pnpm start
+```
 
-The API will have the following endpoints:
+### **5️⃣ Seed the Database (Optional)**  
+Run the seed script to populate the database with initial data:  
+```sh
+pnpm db
+```
 
-- `GET /api/products`: Get all products
-- `GET /api/products/:id`: Get a specific product
-- `POST /api/products`: Create a new product
-- `PUT /api/products/:id`: Update a product
-- `DELETE /api/products/:id`: Delete a product
+---
 
-## Submission
+## **🔐 Authentication**  
+Requests **must include** an `api-key` header to access routes.  
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+Example request (with API key):  
+```sh
+curl -H "api-key: your-secret-api-key" http://localhost:3000/api/products
+```
 
-1. Complete all the required API endpoints
-2. Implement the middleware and error handling
-3. Document your API in the README.md
-4. Include examples of requests and responses
+---
 
-## Resources
+## **📌 API Endpoints**  
 
-- [Express.js Documentation](https://expressjs.com/)
-- [RESTful API Design Best Practices](https://restfulapi.net/)
-- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) 
+### **1️⃣ Get All Products**  
+```http
+GET /api/products
+```
+✅ Supports **category filtering** (`?category=electronics`) and **pagination** (`?page=1&limit=5`).  
+
+### **2️⃣ Get Product by ID**  
+```http
+GET /api/products/:id
+```
+
+### **3️⃣ Create a New Product**  
+```http
+POST /api/products
+```
+🔹 Requires JSON body:  
+```json
+{
+  "name": "New Product",
+  "description": "Description here",
+  "price": 100,
+  "category": "electronics",
+  "inStock": true
+}
+```
+
+### **4️⃣ Update a Product**  
+```http
+PUT /api/products/:id
+```
+🔹 Example body (send only the fields you want to update):  
+```json
+{
+  "price": 150
+}
+```
+
+### **5️⃣ Delete a Product**  
+```http
+DELETE /api/products/:id
+```
+
+### **6️⃣ Search Products by Name**  
+```http
+GET /api/products/search?keyword=laptop
+```
+
+### **7️⃣ Get Product Statistics**  
+```http
+GET /api/products/stats
+```
+✅ Returns **product count per category**.
+
+---
+
+## **🛠 Error Handling**  
+This API **validates environment variables at startup**. If a variable is missing, the app **fails early** and logs an error.  
+
+### **Common Errors**  
+| Error Code | Description |
+|------------|------------|
+| 400 | Missing required fields in request |
+| 403 | Unauthorized (Invalid API Key) |
+| 404 | Product not found |
+| 500 | Internal server error |
+
+---
+
+## **📌 Contribution**  
+Feel free to fork and improve this project!   
+
+---
+
+## **📌 License**  
+MIT License. Free for personal and commercial use. 🚀  
+
+---
+
+Now the README is fully updated for **pnpm**! Would you like me to add an **OpenAPI (Swagger) documentation file** for better API visualization? 🚀💡
+
